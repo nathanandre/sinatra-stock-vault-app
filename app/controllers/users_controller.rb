@@ -26,13 +26,19 @@ class UsersController < ApplicationController
             @user = User.create(params) # <- create new user and assign it to an instance variable. 
             redirect "/users/#{@user.id}" # redirect to the new users how page. <- this becomes a new http request. Post is where you create new users after it redirects to the route who shows you the new user. 
         else 
+            redirect '/signup' 
         end 
     end 
 
     get '/users/:id' do 
         @user = User.find_by(id: params[:id]) 
-        
+
          erb :'/users/show'
+    end 
+
+    get '/logout' do 
+        session.clear 
+        redirect '/'
     end 
      
 end 
