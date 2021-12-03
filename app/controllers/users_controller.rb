@@ -17,16 +17,22 @@ class UsersController < ApplicationController
 
     # this route renders the sign up form 
     get '/signup' do 
-        erb :signup 
+        erb :signup # <- when we signup we're gonna send a post request, 'post users'. params has all the information to create a new user as long as the hashes aren't empty. 
     end 
 
     # here is where we will create a new user and persist them to the Database. 
     post '/users' do 
-
+        if params[:name] != "" && params[:email] != "" && params[:password] != "" # <- if these three hashes are not empty, we can then create the user. 
+            @user = User.create(params) # <- create new user and assign it to an instance variable. 
+            redirect "/users/#{@user.id}" # redirect to the new users how page. <- this becomes a new http request. Post is where you create new users after it redirects to the route who shows you the new user. 
+        else 
+        end 
     end 
 
     get '/users/:id' do 
-        "this will be the user show route"
+        @user = User.find_by(id: params[:id]) 
+        
+         erb :'/users/show'
     end 
      
 end 
