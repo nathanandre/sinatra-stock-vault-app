@@ -8,6 +8,7 @@ class UsersController < ApplicationController
         @user = User.find_by(email: params[:email]) 
         if @user.authenticate(params[:password])
             session[:user_id] = @user.id
+            puts session 
             redirect "users/#{@user.id}"
         else
 
