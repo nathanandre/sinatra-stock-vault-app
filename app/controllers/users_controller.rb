@@ -37,7 +37,7 @@ class UsersController < ApplicationController
     end 
 
     get '/logout' do 
-        session.clear 
+        session.clear # <- clears out session hash 
         redirect '/'
     end 
      
