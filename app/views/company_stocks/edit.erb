@@ -1,1 +1,16 @@
-EDIT FORM GOES HERE 
+<h2>Edit Your Stock Below</h2> 
+
+<form class="" action="/company_stock/<%= @company_stock.id %>" method="post">
+    <input type="hidden" name="_method" value="patch">
+    <label for="name">Name</label> 
+    <input type="text" name="name" value="<%= @company_stock.name %>"> 
+    <label for="ticker">Ticker</label>
+    <input type="text" name="ticker" value="<%= @company_stock.ticker %>">
+    <label for="description">Description</label>
+    <input type="text" name="description" value="<%= @company_stock.description %>">
+    <label for="price">Price</label>
+    <input type="text" name="price" value="<%= @company_stock.price %>">
+    <input type="submit" name="" value="Edit Stock"> 
+
+</form>
+

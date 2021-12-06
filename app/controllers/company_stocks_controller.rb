@@ -23,6 +23,20 @@ class CompanyStocksController < ApplicationController
     end 
 
     get '/company_stock/:id/edit' do #<- This route is going to send us to company_stock/edit.erb, which will render an edit form 
+        @company_stock = CompanyStock.find(params[:id]) 
         erb :'company_stocks/edit'
     end 
+
+    post '/company_stock/:id' do #<- this will find then modify/update the stock. Then redirect to show page. 
+        set_company_stock 
+        @company_stock.update(name: params[:name], ticker: params[:ticker], description: params[:description], price: params[:price]) # <- active record method to update 
+        redirect "/company_stock/#{@company_stock.id}" 
+    end 
+
+    private 
+
+    def set_company_stock #< - created a helper method 
+        @company_stock = CompanyStock.find(params[:id])
+    end 
+
 end 
