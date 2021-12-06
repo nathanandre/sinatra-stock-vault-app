@@ -5,7 +5,7 @@ class CompanyStocksController < ApplicationController
         erb :'/company_stocks/new' #<- render form to create a new stock. form nestled in 'new' under the company_stocks folder in views 
     end 
 
-    post '/company_stocks' do #<- create new journal entry. saves it to the data base. 
+    post '/company_stock' do #<- create new stock. saves it to the data base. 
         if !logged_in?
             redirect '/'
         end 
@@ -14,7 +14,15 @@ class CompanyStocksController < ApplicationController
             redirect "/company_stock/#{@company_stock.id}"
         else 
             redirect '/company_stock/new'
-        end 
+        end
+    end 
 
+    get '/company_stock/:id' do #<- show route. 
+        @company_stock = CompanyStock.find(params[:id])
+        erb :'/company_stocks/show'
+    end 
+
+    get '/company_stock/:id/edit' do #<- This route is going to send us to company_stock/edit.erb, which will render an edit form 
+        erb :'company_stocks/edit'
     end 
 end 
