@@ -24,7 +24,15 @@ class CompanyStocksController < ApplicationController
 
     get '/company_stock/:id/edit' do #<- This route is going to send us to company_stock/edit.erb, which will render an edit form 
         @company_stock = CompanyStock.find(params[:id]) 
-        erb :'company_stocks/edit'
+        if logged_in? 
+            if @company_stock.user == current_user #<- if the user is equal to the current user that is logged in they will be able to edit the stock. 
+                erb :'company_stocks/edit'
+            else 
+                redirect "users/#{current_user.id}"
+            end
+        else 
+            redirect '/'
+        end  
     end 
 
     post '/company_stock/:id' do #<- this will find then modify/update the stock. Then redirect to show page. 
