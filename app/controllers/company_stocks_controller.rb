@@ -1,4 +1,9 @@
 class CompanyStocksController < ApplicationController
+    get '/company_stock/index' do #<- to see all stocks on page
+        @company_stock = CompanyStock.all #<- loading all stocks from the database 
+        erb :'/company_stocks/index' #<- render the erb file 
+    end 
+    
     # here we will get company_stock to render a form for a new stock entry
     get '/company_stock/new' do
         

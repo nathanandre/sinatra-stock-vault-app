@@ -1,1 +1,9 @@
-INDEX PAGE FOR STOCK ENTRIES 
+<h2>ALL MY STOCKS</h2>  
+<br></br> 
+
+<% @company_stock.each do |company_stock| %>
+    <a href="/company_stock/<%= company_stock.id %>"><%= company_stock.name %></a>,
+    <%= company_stock.ticker %> 
+    <p><%= company_stock.description %></p> 
+    <br></br> 
+<% end %> 
