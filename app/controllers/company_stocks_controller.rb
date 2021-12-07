@@ -23,22 +23,30 @@ class CompanyStocksController < ApplicationController
     end 
 
     get '/company_stock/:id/edit' do #<- This route is going to send us to company_stock/edit.erb, which will render an edit form 
-        @company_stock = CompanyStock.find(params[:id]) 
-        if logged_in? 
+        @company_stock = CompanyStock.find(params[:id]) #<- set the stock 
+        if logged_in? #<- check to see if user is logged in. 
             if @company_stock.user == current_user #<- if the user is equal to the current user that is logged in they will be able to edit the stock. 
                 erb :'company_stocks/edit'
             else 
-                redirect "users/#{current_user.id}"
+                redirect "users/#{current_user.id}" #<- if the user doen't a particular stock entry then thy should be redirected back to their home page. 
             end
         else 
-            redirect '/'
+            redirect '/' #<- if not logged they will go to the home page to sign in , if not signed in. 
         end  
     end 
 
     post '/company_stock/:id' do #<- this will find then modify/update the stock. Then redirect to show page. 
         set_company_stock 
-        @company_stock.update(name: params[:name], ticker: params[:ticker], description: params[:description], price: params[:price]) # <- active record method to update 
-        redirect "/company_stock/#{@company_stock.id}" 
+        if logged_in?
+            if @company_stock.user == current_user #<- checking to see if user is logged in before they can edit anything 
+                @company_stock.update(name: params[:name], ticker: params[:ticker], description: params[:description], price: params[:price]) # <- active record method to update 
+                redirect "/company_stock/#{@company_stock.id}" 
+            else 
+                redirect "users/#{current_user.id}"
+            end 
+        else 
+            redirect '/'
+        end
     end 
 
     private 
