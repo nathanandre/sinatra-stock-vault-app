@@ -43,7 +43,7 @@ class CompanyStocksController < ApplicationController
     post '/company_stock/:id' do #<- this will find then modify/update the stock. Then redirect to show page. 
         set_company_stock 
         if logged_in?
-            if @company_stock.user == current_user #<- checking to see if user is logged in before they can edit anything 
+            if @company_stock.user == current_user # && params[:name], ticker: params[:ticker], description: params[:description], price: params[:price] != "" #<- checking to see if user is logged in before they can edit anything and the content of the stock entry isnt empty. 
                 @company_stock.update(name: params[:name], ticker: params[:ticker], description: params[:description], price: params[:price]) # <- active record method to update 
                 redirect "/company_stock/#{@company_stock.id}" 
             else 
@@ -52,6 +52,16 @@ class CompanyStocksController < ApplicationController
         else 
             redirect '/'
         end
+    end 
+
+    delete '/company_stock/:id' do
+        set_company_stock  #<- need to find or get the company stock based on the params id 
+        if current_user == company_stock.user #<- checking to make sure the right user is logged in and has the right to only delete their stocks 
+            @company_stock.destroy #<- deleted the stocks 
+            redirect '/company_stock/index' #<- redirects to the the view of all other stocks 
+        else 
+            redirect '/'
+        end 
     end 
 
     private 

@@ -15,9 +15,12 @@
   </head>
   <body>
     <div class="nav">
+      <% if logged_in? %>
+      <a href="/users/#{@user.id}">My Portfolio</a>
       <a href="/company_stock/index">View My Stocks</a>
       <a href="/company_stock/new">Add New Stock</a>  
       <a href="/logout">Logout</a>
+      <% end %>
     </div>   
     <div class="wrapper">
 

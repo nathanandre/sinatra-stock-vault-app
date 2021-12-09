@@ -6,4 +6,15 @@
 
 <p>Description: <%= @company_stock.description %></p> 
 
-<a href="/company_stock/<%= @company_stock.id %>/edit">Edit This Stock</a>
+<p>Current Price: $<%= @company_stock.price %></p> 
+
+<% if current_user == @company_stock.user %> 
+
+    <a href="/company_stock/<%= @company_stock.id %>/edit">Edit This Stock</a>
+    <br><br> 
+    <form class="" action="/company_stock/<%= @company_stock.id %>" method="post">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="submit" name="" value="Delete This Stock"> 
+    </form> 
+
+<% end %> 
